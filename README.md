@@ -1,0 +1,191 @@
+<p align="center"><img src="assets/logo.svg" width="88" alt="Egress Workbench logo"></p>
+<h1 align="center">Egress Workbench</h1>
+<p align="center">Your tools. One confirmed route.</p>
+<p align="center"><strong>English</strong> · <a href="README.zh-CN.md">简体中文</a></p>
+
+Egress Workbench is a macOS app for running Codex, Claude Code and a shared Chromium browser in persistent Linux workspaces. Your project files stay on your Mac; the tools can read and edit the folder you choose. Application traffic goes through the connection node you select and confirm.
+
+**Set up once, then work from Terminal.** Software, sign-ins and conversations survive stopping and restarting the environment. Different projects have separate workspace directories; the supported tools share their account authorization.
+
+> **0.3.0 release:** this repository contains the public documentation and screenshots. Download the Apple Silicon DMG from the [v0.3.0 release](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.3.0). The app is ad-hoc signed and has not been Apple-notarized.
+
+## 0.3.0 release
+
+[Download the full DMG, about 1.152 GB](https://github.com/bbfp/egress-workbench-app/releases/download/v0.3.0/Egress-Workbench-0.3.0-arm64.dmg) · [SHA-256](https://github.com/bbfp/egress-workbench-app/releases/download/v0.3.0/Egress-Workbench-0.3.0-arm64.dmg.sha256) · [Release notes](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.3.0)
+
+This release targets Apple Silicon Macs running macOS 14 or later. The DMG contains the offline environment and has this SHA-256 digest:
+
+```text
+f5e044116f9c26d7722a3270e1318b3304dbf46c3f22291c5e1b115698f69202
+```
+
+The public repository contains guides and screenshots. The application source is not published here.
+
+0.3.0 uses MOYU attribution, keeps Swift debug symbols outside the distributed app, and stages Python from its verified original archive to avoid local build-cache paths. It retains the functionality of 0.2.9, which fixes Codex and Claude Code sign-in detection and makes account states easier to distinguish. It adds two network-check website shortcuts that open inside the shared Chromium browser. Docker containerd/classic compatibility, environment checks, read-only runtime component volumes, source protection and telemetry defaults are retained.
+
+![Native connection screen with explicitly labeled demonstration data](assets/connection-en.png)
+
+*Screenshots show the native app using labeled demonstration data. The example IP and region are illustrative, not a live connection measurement.*
+
+## What it does
+
+- **Persistent tools:** Codex, Claude Code and Chromium are included in the full installer. You bring your own accounts and connection subscription.
+- **A controlled network route:** the environment connects to the chosen node itself. It does not fall back to an ordinary direct connection when the node is unavailable.
+- **Explicit connection approval:** inspect the measured exit IP, estimated region and time zone before enabling the environment. A detected node or exit change requires a new check and confirmation.
+- **Real project files:** run a command from your Mac project directory to share it with that project's Linux workspace. Multiple projects can run concurrently.
+- **One shared browser:** cookies, bookmarks and history persist across projects. Sign-in uses this browser; the Mac browser displays its remote screen.
+- **English and Chinese UI:** the app initially follows macOS. Change its language and appearance in Settings. App and Mac-side messages are localized; some Linux startup diagnostics and third-party tool output remain in English.
+
+## Before you begin
+
+You need an **Apple Silicon Mac with macOS 14 or later**, a running **Docker Desktop** installation, enough storage for the included Linux environment, and a supported connection node. The app uses Docker Desktop's `desktop-linux` environment. OrbStack and Colima are detected but are not supported as runtime engines.
+
+Version 0.3.0 supports fixed public IPv4 nodes: **Trojan TCP/TLS, VMess AEAD TCP with optional TLS, VLESS TCP/TLS, and Shadowsocks AEAD/2022 TCP without plugins**. Existing subscription URLs, URI/Base64 lists, Clash `proxies`, and EWB profiles remain compatible. Unsupported transports and options are reported with a reason; the app does not silently convert them to a weaker connection mode.
+
+A single-object Trojan client JSON can also be pasted or imported when it contains fields such as `type`, `host`, `port` and `password`. The optional `data` URL is not fetched or retained, and an `udp` flag does not enable UDP. Other raw client JSON exports are not supported yet.
+
+**Do I need to run another VPN app?** Egress Workbench establishes its own connection to the selected node. Your Mac's VPN does not need to use that same node or TUN mode. Your Mac still needs to be able to reach the selected node's server. Egress Workbench controls its own environment's traffic, not all traffic from your Mac.
+
+**Choose a stable node you trust and can keep using.** Frequent network or location changes may prompt additional account checks; [OpenAI lists unexpected sign-in locations as one possible alert cause](https://help.openai.com/en/articles/10471992-why-am-i-receiving-a-suspicious-activity-alert). A node name does not guarantee a fixed exit IP, and no node choice guarantees account acceptance. Egress Workbench requires another check and confirmation when it detects an exit change.
+
+## First setup
+
+1. **Install the app.** Open the DMG, drag Egress Workbench to Applications, and launch Docker Desktop. Open Egress Workbench. Follow macOS's normal security approval process for a preview build; do not disable system protection globally.
+2. **Confirm a data folder.** Keep the default, or choose a dedicated folder on an external drive. Confirm this location before importing the environment.
+3. **Import the included environment.** The app verifies and imports the bundled components locally. It does not download Codex, Claude Code or Chromium one by one. Wait for installation to finish; a failed attempt retains existing data and can be retried in the same directory.
+4. **Import and select a node.** Paste your subscription or node link, or choose a file. Pick a supported node and click **Check**. The app asks before stopping any running work in this environment to check a node. Subscriptions are parsed locally. A provider's certificate-compatibility setting may require a trust confirmation; no certificate file or fingerprint needs to be entered by hand.
+5. **Review the exit.** Check the exit IP, estimated region and time zone. Click **Review and confirm**. Continue only when the connection reads **Confirmed and ready**.
+6. **Sign in when needed.** Open **Accounts**, then choose Codex or Claude Code. Terminal shows progress. Complete authorization on the official page **inside the shared browser's remote screen**. Do not copy its authorization URL into the Mac browser's address bar.
+   You can skip the account step and return later. Finishing the setup guide does not certify an account login.
+7. **Open your project in Terminal.** Use the command examples on the Connection page. They target the selected data folder, even if your Mac already has another Egress Workbench installation.
+
+### Where is my data?
+
+There are three distinct locations:
+
+| Location | What it contains |
+|---|---|
+| Applications | The macOS app |
+| Your chosen data folder | Private connection settings, host runtime files, logs and browser downloads |
+| Docker Desktop's data disk | Linux images, containers, persistent tool homes, sign-ins, conversations and browser profile |
+
+Your project files stay in their original Mac folders. **Choosing an external data folder does not move Docker's data disk.** Set its location separately in Docker Desktop if needed. Moving an existing environment to another Mac requires a separate backup and restore of both the chosen folder and Docker-backed data. The first-use steps above create a new environment; copying the app or chosen folder alone is not a full environment backup. Don't unplug a drive while the app or Docker is using it.
+
+Keep both storage locations when backing up or moving an environment. This desktop preview does not include a migration assistant.
+
+### Docker image-store compatibility
+
+Since 0.2.8, the installer includes the complete offline image set for both containerd and classic image stores and recognizes their different image identifiers. **You do not need to switch image stores to install this version.** The installer does not change Docker's storage settings, overwrite existing image tags or delete existing containers and volumes. After import, it verifies all three required images; a failed check stops installation instead of silently downloading replacements.
+
+The 0.2.8 validation completed native offline installation, repeat installation and data-preservation checks on Docker Desktop Engine 29.4.3 with the classic store and an isolated ARM64 Engine 29.9.2 with containerd. The containerd tests retained an existing test container, its writable layer, image tag and volume data. This is not a claim of coverage for every Docker version; a fresh-Mac installation through Docker Desktop 4.97's graphical interface has not been retested with 0.2.8.
+
+## Daily use
+
+Settings > Environment check reads local configuration and the isolation and mounts of existing containers on demand. It does not start workloads or probe the public network; unverified items are labeled.
+
+The app shows a full command path when it cannot verify the short `ewb` entry. **Use that displayed path in place of `ewb` below.** Settings can add the entry under `~/.local/bin`; the app does not edit your shell configuration. If your shell cannot find `ewb`, the full path still works.
+
+```sh
+cd /path/to/your-project
+
+# Interactive tools
+ewb codex
+ewb claude
+
+# Send one request
+ewb codex exec "Summarize this project"
+ewb claude -p "Summarize this project"
+
+# Continue an earlier conversation
+ewb codex resume
+ewb claude --continue
+
+# Enter the project's Linux shell
+ewb shell
+```
+
+Replace the example project path with your own. Tools edit the real shared files, so normal version control and backups still matter. Project contents can reveal information about you or your work; the app does not sanitize them automatically.
+
+### Refresh a subscription or change node
+
+When a provider publishes a monthly update, open **Connection > Connection settings**, paste the new subscription URL or choose the downloaded file, and select **Import**. Choose a node, run **Check**, review the exit details, and confirm it before starting work again. This is a manual refresh; it keeps the installed software, projects, accounts, sessions and browser profile. Changing a node does not require reinstalling the DMG.
+
+Save your work before checking a node: the check stops this environment's workloads. Once a browser or project exists, a node requiring a different country, city or time zone directs you to a new dedicated directory while preserving the old environment; existing identity data is not migrated automatically.
+
+### Update an existing environment
+
+**From 0.2.9 to 0.3.0:** replace the app. The runtime components are byte-identical, so this release introduces no runtime migration or renewed sign-in requirement. macOS may ask you to approve opening the updated app.
+
+After replacing the app, check the runtime component status in Settings and use the offered update entry. The 0.2.7 → 0.2.9 update was tested with existing authorization, configuration, project records, writable container data and persistent volumes preserved, and the previous runtime backed up. Replacing the app alone does not update installed runtime components. Initialized 0.2.6 protected environments also retain the backup-and-upgrade path. End active sessions before updating. A successful update leaves the environment stopped until you check and confirm the connection again. An old directory that has not been initialized directs you to finish connection setup. Older or incompatible layouts require a new dedicated directory and retain the original data. If recovery is pending, keep Docker running and choose Continue recovery.
+
+### Accounts
+
+```sh
+ewb login                 # Codex
+ewb claude auth login     # Claude Code
+```
+
+These commands use the shared internal browser. A failed internal browser flow stops rather than opening an account page in the Mac browser. The browser keeps its cookies, but providers can expire sessions or require new verification. **An unknown account status is not the same as being signed out.** Ordinary environment restarts do not deliberately erase authorization.
+
+Use **Accounts > Refresh account status** to check the saved local authorization with the official CLI interfaces. The app does not send a model request or return credentials as part of this check.
+
+| Appearance | Meaning |
+|---|---|
+| Green, Signed in · local authorization | The tool recognizes its local authorization. |
+| Yellow, Not signed in | No local authorization was found. |
+| Blue, Checking | The check is still running. |
+| Gray, Unable to check / Previous result · refresh to check | Read the reason and refresh. This is not a sign-out result. |
+
+Local authorization does not guarantee that a provider will accept the next request; expired or revoked sessions may still require another sign-in. Updating this environment normally preserves authorization.
+
+### Browser and clipboard
+
+```sh
+ewb browser
+ewb browser stop
+```
+
+One browser serves all projects, regardless of the directory you start it from. Use **Paste in** to send text from your Mac. To copy text back, select it inside Chromium, press **Ctrl+C**, then click **Copy out**. Clipboard writes happen only when you click; there is no automatic synchronization. Chinese, English and multiline text are supported. Downloads appear under `browser-files/Downloads` in your chosen data folder.
+
+Closing the remote viewer does not stop Chromium. `ewb browser stop` releases browser resources while retaining its profile and downloads.
+
+### Network-check websites
+
+Open the shared browser, then choose **Net.Coffee** or **fuck-claude.app** on the app's Browser page or under **Network checks · 网络检测** above the remote display. These fixed shortcuts open [ip.net.coffee/claude](https://ip.net.coffee/claude/) and [fuck-claude.app](https://fuck-claude.app/) in a new tab inside Chromium, using the environment's confirmed connection.
+
+The first-open suggestion can be skipped. Neither site is opened automatically, and Egress Workbench does not read or interpret the results. The websites display their own assessments; those assessments do not guarantee account acceptance.
+
+### Resources and stopping
+
+```sh
+ewb ps             # Show running containers and resource usage
+ewb stop           # Stop the current project
+ewb stop-all       # Stop this environment, including shared services
+```
+
+Project containers stop automatically after **30 idle minutes**, once every session, shell and background job has exited. A tool waiting for input still counts as active. The browser and shared services are excluded. Stopping preserves software, authorization and conversation files.
+
+## Connection states
+
+| State | What to do |
+|---|---|
+| Not set up yet | Complete the steps in Get started. |
+| Checking the connection | Wait for the result before starting work. |
+| Confirmed and ready | Start your tools or browser. |
+| Review and confirm | Review the checked node and exit before approving. |
+| Networking blocked | Check the node and connection again; don't bypass the gate. |
+| Status unavailable | Refresh and inspect the app's private logs. The app cannot currently confirm the state; it does not show stale success. |
+
+Connection checks are periodic, so detecting an upstream exit change takes time. IP location is an estimate from external databases. This app does **not** prove physical location, conceal every container or proxy characteristic, or guarantee account acceptance by a service. Its network controls govern the environment's route to the selected node; they cannot control how the provider forwards traffic beyond that node. Provider rules and account verification still apply.
+
+## Getting help
+
+Keep subscription links, node passwords, cookies, authorization codes and private logs out of GitHub issues. Describe the step that failed, your macOS/app version and a redacted error message. Installer failures can be retried in the same data folder; do not delete persistent data as a first troubleshooting step.
+
+---
+
+Created by [MOYU](https://github.com/bbfp).
+
+## Account and service disclaimer
+
+Egress Workbench does not guarantee that any account will remain available. If using this environment, including Codex, Claude Code, Chromium or another tool, leads to an account suspension, restriction, termination, additional verification, loss of access or related loss, the user accepts that risk and is responsible for the outcome. The developer and maintainers are not responsible for account bans, restrictions, service decisions or resulting losses. Use each service according to its terms and policies.

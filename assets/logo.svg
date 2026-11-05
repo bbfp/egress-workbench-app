@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-labelledby="t d">
+  <title id="t">Egress Workbench mark</title>
+  <desc id="d">A rounded enclosure with a single opening on its right edge. A route leaves a small block inside the enclosure, passes through the opening and ends at a survey station mark: one way out, measured and confirmed.</desc>
+  <rect width="128" height="128" rx="28" fill="#F7F6F3"/>
+  <g transform="translate(9.6 9.6) scale(0.85)">
+  <!-- Grid: 128 units. Enclosure stroke 10, butt caps form a crisp doorway (gap y 52-76). -->
+  <path d="M84 52V46a20 20 0 0 0-20-20H28A20 20 0 0 0 8 46v36a20 20 0 0 0 20 20h36a20 20 0 0 0 20-20v-6" fill="none" stroke="#161A22" stroke-width="10"/>
+  <!-- Origin block: the workload -->
+  <rect x="22" y="55" width="18" height="18" rx="4" fill="#161A22"/>
+  <!-- Route through the single opening -->
+  <path d="M40 64H93" fill="none" stroke="#161A22" stroke-width="10"/>
+  <!-- Station mark: the confirmed exit -->
+  <circle cx="108" cy="64" r="12" fill="none" stroke="#3355D6" stroke-width="7"/>
+  <circle cx="108" cy="64" r="4.5" fill="#3355D6"/>
+  </g>
+</svg>
