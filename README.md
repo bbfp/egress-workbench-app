@@ -183,9 +183,20 @@ Connection checks are periodic, so detecting an upstream exit change takes time.
 Keep subscription links, node passwords, cookies, authorization codes and private logs out of GitHub issues. Describe the step that failed, your macOS/app version and a redacted error message. Installer failures can be retried in the same data folder; do not delete persistent data as a first troubleshooting step.
 
 ---
-
 Created by [MOYU](https://github.com/bbfp).
 
-## Account and service disclaimer
+## License and scope
 
-Egress Workbench does not guarantee that any account will remain available. If using this environment, including Codex, Claude Code, Chromium or another tool, leads to an account suspension, restriction, termination, additional verification, loss of access or related loss, the user accepts that risk and is responsible for the outcome. The developer and maintainers are not responsible for account bans, restrictions, service decisions or resulting losses. Use each service according to its terms and policies.
+Licensor: MOYU. The [PolyForm Noncommercial License 1.0.0](LICENSE) covers MOYU's original documentation, images and descriptions in this repository, and the 0.3.0 Release App published on GitHub Releases, to the extent MOYU holds the relevant rights. The 0.3.0 Release App is offered for the noncommercial purposes stated in the license, subject to its scope and notices. Third-party components remain under their own licenses. If you copy or redistribute material covered by this license, include the LICENSE text or its official URL and any notices that LICENSE requires. The license includes its stated permissions for charitable, educational, public research, public safety or health, environmental protection and government institutions. If this summary conflicts with the [LICENSE](LICENSE) text, the LICENSE text controls.
+
+PolyForm Noncommercial is a noncommercial license. It is not an OSI-approved open-source license, and it does not permit commercial use. This repository only publishes documentation, images and the Release App; it does not publish Egress Workbench's own source code. Adding LICENSE does not mean that the source code has been published or grant additional rights to unpublished source. Third-party components and services remain subject to their own licenses, terms and policies.
+
+## Commercial authorization and collaboration
+
+Commercial use outside the permissions in LICENSE, as well as enterprise use, resale, product integration or hosted services, requires prior contact at [alphaevolve.com@gmail.com](mailto:alphaevolve.com@gmail.com). You can use “Egress Workbench commercial authorization” as the email subject. Contacting us does not itself grant a commercial license; terms, pricing and applicable versions must be agreed separately.
+
+## Account, service and affiliation disclaimer
+
+Egress Workbench is an independent project by MOYU. It is not affiliated with, sponsored by, endorsed by or officially partnered with Anthropic, OpenAI, Google, Docker or any other service provider named in this repository. The project does not provide third-party accounts, subscription nodes or third-party services, and does not guarantee that a network, account or third-party service will remain available.
+
+Using this environment, including Codex, Claude Code, Chromium or another tool, may lead a provider to require verification, restrict, suspend, terminate or ban an account. To the extent allowed by applicable law, the user accepts the risk and consequences of any account loss, service interruption or related loss. Follow applicable law, node-provider rules and each service's terms, and back up project data before use. Except where applicable law requires otherwise, the author and maintainers are not responsible for third-party service decisions or resulting losses.
