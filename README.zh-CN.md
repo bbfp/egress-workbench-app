@@ -1,13 +1,15 @@
 <p align="center"><img src="assets/logo.svg" width="88" alt="Egress Workbench 标志"></p>
 <h1 align="center">Egress Workbench｜指纹运行环境</h1>
-<p align="center">类比指纹浏览器，让 Claude Code、Codex 在同一套运行环境中工作。</p>
+<p align="center">让 Claude Code、Codex 与浏览器在统一的工作环境中运行。</p>
 <p align="center"><a href="README.md">English</a> · <strong>简体中文</strong></p>
 
-Egress Workbench 是面向 macOS 的**指纹运行环境**。可以把它理解成把指纹浏览器的思路延伸到命令行工具：Claude Code、Codex 和共享 Chromium 在同一套环境中，使用所选网络出口与配置好的时区。工具运行在持久化 Linux 工作空间中，可以读写你在 Mac 上选定的项目目录。
+Egress Workbench 是面向 macOS 的**指纹运行环境**，为 Claude Code、Codex 和共享 Chromium 提供统一的网络出口、时区配置与持久化工作空间。
 
-这个名字用于说明产品思路。目前实现的是出口 IP 与估计地区核对、时区配置，以及工具和浏览器状态的持久化。Linux、容器和硬件特征仍可能被识别；它不是物理机模拟器，也不保证匿名、防封或账号被服务商接受。其他工具需要单独确认兼容性。
+工具运行在 Linux 环境中，可以读写你在 Mac 上选定的项目目录。普通停止和重启会保留软件、登录与会话状态，让你继续处理已有项目。
 
-**配置一次，之后直接在终端工作。** 停止、重启环境会保留软件、登录和会话。不同项目使用各自的工作目录，已支持的工具共用账号授权。
+目前实现的是出口 IP 与估计地区核对、时区配置，以及工具和浏览器状态的持久化。Linux、容器和硬件特征仍可能被识别；它不是物理机模拟器，也不保证匿名、防封或账号被服务商接受。其他工具需要单独确认兼容性。
+
+**配置一次，之后直接在终端工作。** 不同项目使用各自的工作目录，已支持的工具共用账号授权。
 
 > **0.3.1 发布版：** 此仓库提供公开说明和配图。Apple Silicon 安装包位于 [v0.3.1 Release](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.3.1)。当前为 ad-hoc 签名，尚未通过 Apple 公证。
 

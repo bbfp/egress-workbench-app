@@ -1,13 +1,15 @@
 <p align="center"><img src="assets/logo.svg" width="88" alt="Egress Workbench logo"></p>
 <h1 align="center">Egress Workbench | Fingerprint Runtime Environment</h1>
-<p align="center">A fingerprint-browser-style workspace for Claude Code and Codex.</p>
+<p align="center">One working environment for Claude Code, Codex and Chromium.</p>
 <p align="center"><strong>English</strong> · <a href="README.zh-CN.md">简体中文</a></p>
 
-Egress Workbench is a **fingerprint runtime environment** for macOS. Think of the idea behind a fingerprint browser, extended to command-line tools: Claude Code, Codex and shared Chromium work within the same environment, using your selected network exit and configured time zone. The tools run in persistent Linux workspaces and can read and edit the project folder you choose on your Mac.
+Egress Workbench is a **fingerprint runtime environment** for macOS, providing Claude Code, Codex and shared Chromium with a common network exit, configured time zone and persistent workspaces.
 
-The name describes this product approach. The current implementation checks the exit IP and estimated region, applies the configured time zone, and preserves tool and browser state. Linux, container and hardware characteristics may remain detectable; this is not a physical-machine emulator or an anonymity, anti-ban or account-acceptance guarantee. Other tools need their own compatibility checks.
+Tools run in Linux and can read and edit the project folder you select on your Mac. Software, sign-ins and conversation state survive ordinary environment stops and restarts, so you can continue working on existing projects.
 
-**Set up once, then work from Terminal.** Software, sign-ins and conversations survive stopping and restarting the environment. Different projects have separate workspace directories; the supported tools share their account authorization.
+The current implementation checks the exit IP and estimated region, applies the configured time zone, and preserves tool and browser state. Linux, container and hardware characteristics may remain detectable; this is not a physical-machine emulator or an anonymity, anti-ban or account-acceptance guarantee. Other tools need their own compatibility checks.
+
+**Set up once, then work from Terminal.** Different projects have separate workspace directories; the supported tools share their account authorization.
 
 > **0.3.1 release:** this repository contains the public documentation and screenshots. Download the Apple Silicon DMG from the [v0.3.1 release](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.3.1). The app is ad-hoc signed and has not been Apple-notarized.
 
