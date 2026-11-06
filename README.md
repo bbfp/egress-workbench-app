@@ -1,35 +1,39 @@
 <p align="center"><img src="assets/logo.svg" width="88" alt="Egress Workbench logo"></p>
-<h1 align="center">Egress Workbench</h1>
-<p align="center">Your tools. One confirmed route.</p>
+<h1 align="center">Egress Workbench | Fingerprint Runtime Environment</h1>
+<p align="center">A fingerprint-browser-style workspace for Claude Code and Codex.</p>
 <p align="center"><strong>English</strong> · <a href="README.zh-CN.md">简体中文</a></p>
 
-Egress Workbench is a macOS app for running Codex, Claude Code and a shared Chromium browser in persistent Linux workspaces. Your project files stay on your Mac; the tools can read and edit the folder you choose. Application traffic goes through the connection node you select and confirm.
+Egress Workbench is a **fingerprint runtime environment** for macOS. Think of the idea behind a fingerprint browser, extended to command-line tools: Claude Code, Codex and shared Chromium work within the same environment, using your selected network exit and configured time zone. The tools run in persistent Linux workspaces and can read and edit the project folder you choose on your Mac.
+
+The name describes this product approach. The current implementation checks the exit IP and estimated region, applies the configured time zone, and preserves tool and browser state. Linux, container and hardware characteristics may remain detectable; this is not a physical-machine emulator or an anonymity, anti-ban or account-acceptance guarantee. Other tools need their own compatibility checks.
 
 **Set up once, then work from Terminal.** Software, sign-ins and conversations survive stopping and restarting the environment. Different projects have separate workspace directories; the supported tools share their account authorization.
 
-> **0.3.0 release:** this repository contains the public documentation and screenshots. Download the Apple Silicon DMG from the [v0.3.0 release](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.3.0). The app is ad-hoc signed and has not been Apple-notarized.
+> **0.3.1 release:** this repository contains the public documentation and screenshots. Download the Apple Silicon DMG from the [v0.3.1 release](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.3.1). The app is ad-hoc signed and has not been Apple-notarized.
 
-## 0.3.0 release
+## 0.3.1 release
 
-[Download the full DMG, about 1.152 GB](https://github.com/bbfp/egress-workbench-app/releases/download/v0.3.0/Egress-Workbench-0.3.0-arm64.dmg) · [SHA-256](https://github.com/bbfp/egress-workbench-app/releases/download/v0.3.0/Egress-Workbench-0.3.0-arm64.dmg.sha256) · [Release notes](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.3.0)
+[Download the full DMG, about 1.149 GB](https://github.com/bbfp/egress-workbench-app/releases/download/v0.3.1/Egress-Workbench-0.3.1-arm64.dmg) · [SHA-256](https://github.com/bbfp/egress-workbench-app/releases/download/v0.3.1/Egress-Workbench-0.3.1-arm64.dmg.sha256) · [Release notes](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.3.1)
 
 This release targets Apple Silicon Macs running macOS 14 or later. The DMG contains the offline environment and has this SHA-256 digest:
 
 ```text
-f5e044116f9c26d7722a3270e1318b3304dbf46c3f22291c5e1b115698f69202
+881d1f3b95ed4586f0bc24ad1994c05aaa3db103d230158fc86366b5eb4b62ac
 ```
 
 The public repository contains guides and screenshots. The application source is not published here.
 
-0.3.0 uses MOYU attribution, keeps Swift debug symbols outside the distributed app, and stages Python from its verified original archive to avoid local build-cache paths. It retains the functionality of 0.2.9, which fixes Codex and Claude Code sign-in detection and makes account states easier to distinguish. It adds two network-check website shortcuts that open inside the shared Chromium browser. Docker containerd/classic compatibility, environment checks, read-only runtime component volumes, source protection and telemetry defaults are retained.
+0.3.1 updates the product introduction and examples, and puts Claude Code first in the app's command tabs, account cards and project buttons. Codex remains available with the same commands. Runtime components, Docker containerd/classic support, source protection and telemetry defaults are unchanged from 0.3.0.
+
+**This is a test release.** It began as a tool for personal use; bugs and compatibility gaps may remain. The repository publishes the App, documentation and screenshots, without the application's own source code.
 
 ![Native connection screen with explicitly labeled demonstration data](assets/connection-en.png)
 
-*Screenshots show the native app using labeled demonstration data. The example IP and region are illustrative, not a live connection measurement.*
+*Screenshots show the native app using labeled demonstration data. The IP, region and project paths shown are examples, not user data or live connection measurements.*
 
 ## What it does
 
-- **Persistent tools:** Codex, Claude Code and Chromium are included in the full installer. You bring your own accounts and connection subscription.
+- **Persistent tools:** Claude Code, Codex and Chromium are included in the full installer. You bring your own accounts and connection subscription.
 - **A controlled network route:** the environment connects to the chosen node itself. It does not fall back to an ordinary direct connection when the node is unavailable.
 - **Explicit connection approval:** inspect the measured exit IP, estimated region and time zone before enabling the environment. A detected node or exit change requires a new check and confirmation.
 - **Real project files:** run a command from your Mac project directory to share it with that project's Linux workspace. Multiple projects can run concurrently.
@@ -40,7 +44,7 @@ The public repository contains guides and screenshots. The application source is
 
 You need an **Apple Silicon Mac with macOS 14 or later**, a running **Docker Desktop** installation, enough storage for the included Linux environment, and a supported connection node. The app uses Docker Desktop's `desktop-linux` environment. OrbStack and Colima are detected but are not supported as runtime engines.
 
-Version 0.3.0 supports fixed public IPv4 nodes: **Trojan TCP/TLS, VMess AEAD TCP with optional TLS, VLESS TCP/TLS, and Shadowsocks AEAD/2022 TCP without plugins**. Existing subscription URLs, URI/Base64 lists, Clash `proxies`, and EWB profiles remain compatible. Unsupported transports and options are reported with a reason; the app does not silently convert them to a weaker connection mode.
+Version 0.3.1 supports fixed public IPv4 nodes: **Trojan TCP/TLS, VMess AEAD TCP with optional TLS, VLESS TCP/TLS, and Shadowsocks AEAD/2022 TCP without plugins**. Existing subscription URLs, URI/Base64 lists, Clash `proxies`, and EWB profiles remain compatible. Unsupported transports and options are reported with a reason; the app does not silently convert them to a weaker connection mode.
 
 A single-object Trojan client JSON can also be pasted or imported when it contains fields such as `type`, `host`, `port` and `password`. The optional `data` URL is not fetched or retained, and an `udp` flag does not enable UDP. Other raw client JSON exports are not supported yet.
 
@@ -52,10 +56,10 @@ A single-object Trojan client JSON can also be pasted or imported when it contai
 
 1. **Install the app.** Open the DMG, drag Egress Workbench to Applications, and launch Docker Desktop. Open Egress Workbench. Follow macOS's normal security approval process for a preview build; do not disable system protection globally.
 2. **Confirm a data folder.** Keep the default, or choose a dedicated folder on an external drive. Confirm this location before importing the environment.
-3. **Import the included environment.** The app verifies and imports the bundled components locally. It does not download Codex, Claude Code or Chromium one by one. Wait for installation to finish; a failed attempt retains existing data and can be retried in the same directory.
+3. **Import the included environment.** The app verifies and imports the bundled components locally. It does not download Claude Code, Codex or Chromium one by one. Wait for installation to finish; a failed attempt retains existing data and can be retried in the same directory.
 4. **Import and select a node.** Paste your subscription or node link, or choose a file. Pick a supported node and click **Check**. The app asks before stopping any running work in this environment to check a node. Subscriptions are parsed locally. A provider's certificate-compatibility setting may require a trust confirmation; no certificate file or fingerprint needs to be entered by hand.
 5. **Review the exit.** Check the exit IP, estimated region and time zone. Click **Review and confirm**. Continue only when the connection reads **Confirmed and ready**.
-6. **Sign in when needed.** Open **Accounts**, then choose Codex or Claude Code. Terminal shows progress. Complete authorization on the official page **inside the shared browser's remote screen**. Do not copy its authorization URL into the Mac browser's address bar.
+6. **Sign in when needed.** Open **Accounts**, then choose Claude Code or Codex. Terminal shows progress. Complete authorization on the official page **inside the shared browser's remote screen**. Do not copy its authorization URL into the Mac browser's address bar.
    You can skip the account step and return later. Finishing the setup guide does not certify an account login.
 7. **Open your project in Terminal.** Use the command examples on the Connection page. They target the selected data folder, even if your Mac already has another Egress Workbench installation.
 
@@ -89,16 +93,16 @@ The app shows a full command path when it cannot verify the short `ewb` entry. *
 cd /path/to/your-project
 
 # Interactive tools
-ewb codex
 ewb claude
+ewb codex
 
 # Send one request
-ewb codex exec "Summarize this project"
 ewb claude -p "Summarize this project"
+ewb codex exec "Summarize this project"
 
 # Continue an earlier conversation
-ewb codex resume
 ewb claude --continue
+ewb codex resume
 
 # Enter the project's Linux shell
 ewb shell
@@ -114,15 +118,15 @@ Save your work before checking a node: the check stops this environment's worklo
 
 ### Update an existing environment
 
-**From 0.2.9 to 0.3.0:** replace the app. The runtime components are byte-identical, so this release introduces no runtime migration or renewed sign-in requirement. macOS may ask you to approve opening the updated app.
+**From 0.2.9 or 0.3.0 to 0.3.1:** replace the app. The runtime components are byte-identical, so this release introduces no runtime migration or renewed sign-in requirement. macOS may ask you to approve opening the updated app.
 
 After replacing the app, check the runtime component status in Settings and use the offered update entry. The 0.2.7 → 0.2.9 update was tested with existing authorization, configuration, project records, writable container data and persistent volumes preserved, and the previous runtime backed up. Replacing the app alone does not update installed runtime components. Initialized 0.2.6 protected environments also retain the backup-and-upgrade path. End active sessions before updating. A successful update leaves the environment stopped until you check and confirm the connection again. An old directory that has not been initialized directs you to finish connection setup. Older or incompatible layouts require a new dedicated directory and retain the original data. If recovery is pending, keep Docker running and choose Continue recovery.
 
 ### Accounts
 
 ```sh
-ewb login                 # Codex
 ewb claude auth login     # Claude Code
+ewb login                 # Codex
 ```
 
 These commands use the shared internal browser. A failed internal browser flow stops rather than opening an account page in the Mac browser. The browser keeps its cookies, but providers can expire sessions or require new verification. **An unknown account status is not the same as being signed out.** Ordinary environment restarts do not deliberately erase authorization.
@@ -187,7 +191,7 @@ Created by [MOYU](https://github.com/bbfp).
 
 ## License and scope
 
-Licensor: MOYU. The [PolyForm Noncommercial License 1.0.0](LICENSE) covers MOYU's original documentation, images and descriptions in this repository, and the 0.3.0 Release App published on GitHub Releases, to the extent MOYU holds the relevant rights. The 0.3.0 Release App is offered for the noncommercial purposes stated in the license, subject to its scope and notices. Third-party components remain under their own licenses. If you copy or redistribute material covered by this license, include the LICENSE text or its official URL and any notices that LICENSE requires. The license includes its stated permissions for charitable, educational, public research, public safety or health, environmental protection and government institutions. If this summary conflicts with the [LICENSE](LICENSE) text, the LICENSE text controls.
+Licensor: MOYU. The [PolyForm Noncommercial License 1.0.0](LICENSE) covers MOYU's original documentation, images and descriptions in this repository, and the 0.3.0 and 0.3.1 Release Apps published on GitHub Releases, to the extent MOYU holds the relevant rights. The 0.3.0 and 0.3.1 Release Apps are offered for the noncommercial purposes stated in the license, subject to its scope and notices. Third-party components remain under their own licenses. If you copy or redistribute material covered by this license, include the LICENSE text or its official URL and any notices that LICENSE requires. The license includes its stated permissions for charitable, educational, public research, public safety or health, environmental protection and government institutions. If this summary conflicts with the [LICENSE](LICENSE) text, the LICENSE text controls.
 
 PolyForm Noncommercial is a noncommercial license. It is not an OSI-approved open-source license, and it does not permit commercial use. This repository only publishes documentation, images and the Release App; it does not publish Egress Workbench's own source code. Adding LICENSE does not mean that the source code has been published or grant additional rights to unpublished source. Third-party components and services remain subject to their own licenses, terms and policies.
 

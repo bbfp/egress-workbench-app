@@ -1,35 +1,39 @@
 <p align="center"><img src="assets/logo.svg" width="88" alt="Egress Workbench 标志"></p>
-<h1 align="center">Egress Workbench</h1>
-<p align="center">你的工作工具，只走已确认的连接。</p>
+<h1 align="center">Egress Workbench｜指纹运行环境</h1>
+<p align="center">类比指纹浏览器，让 Claude Code、Codex 在同一套运行环境中工作。</p>
 <p align="center"><a href="README.md">English</a> · <strong>简体中文</strong></p>
 
-Egress Workbench 是一个 macOS 应用，用来在持久化的 Linux 工作环境中运行 Codex、Claude Code 和共享 Chromium 浏览器。项目文件仍保存在 Mac 上，环境中的工具能够读写你选择的目录。应用流量通过你选择并确认的节点联网。
+Egress Workbench 是面向 macOS 的**指纹运行环境**。可以把它理解成把指纹浏览器的思路延伸到命令行工具：Claude Code、Codex 和共享 Chromium 在同一套环境中，使用所选网络出口与配置好的时区。工具运行在持久化 Linux 工作空间中，可以读写你在 Mac 上选定的项目目录。
+
+这个名字用于说明产品思路。目前实现的是出口 IP 与估计地区核对、时区配置，以及工具和浏览器状态的持久化。Linux、容器和硬件特征仍可能被识别；它不是物理机模拟器，也不保证匿名、防封或账号被服务商接受。其他工具需要单独确认兼容性。
 
 **配置一次，之后直接在终端工作。** 停止、重启环境会保留软件、登录和会话。不同项目使用各自的工作目录，已支持的工具共用账号授权。
 
-> **0.3.0 发布版：** 此仓库提供公开说明和配图。Apple Silicon 安装包位于 [v0.3.0 Release](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.3.0)。当前为 ad-hoc 签名，尚未通过 Apple 公证。
+> **0.3.1 发布版：** 此仓库提供公开说明和配图。Apple Silicon 安装包位于 [v0.3.1 Release](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.3.1)。当前为 ad-hoc 签名，尚未通过 Apple 公证。
 
-## 0.3.0 发布版
+## 0.3.1 发布版
 
-[下载完整 DMG，约 1.152 GB](https://github.com/bbfp/egress-workbench-app/releases/download/v0.3.0/Egress-Workbench-0.3.0-arm64.dmg) · [SHA-256](https://github.com/bbfp/egress-workbench-app/releases/download/v0.3.0/Egress-Workbench-0.3.0-arm64.dmg.sha256) · [发布说明](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.3.0)
+[下载完整 DMG，约 1.149 GB](https://github.com/bbfp/egress-workbench-app/releases/download/v0.3.1/Egress-Workbench-0.3.1-arm64.dmg) · [SHA-256](https://github.com/bbfp/egress-workbench-app/releases/download/v0.3.1/Egress-Workbench-0.3.1-arm64.dmg.sha256) · [发布说明](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.3.1)
 
 本版本适用于 Apple Silicon、macOS 14 及以上，DMG 内含离线运行环境。SHA-256：
 
 ```text
-f5e044116f9c26d7722a3270e1318b3304dbf46c3f22291c5e1b115698f69202
+881d1f3b95ed4586f0bc24ad1994c05aaa3db103d230158fc86366b5eb4b62ac
 ```
 
 公开仓库只提供使用说明和截图，应用源码不在这里发布。
 
-0.3.0 统一使用 MOYU 署名，将 Swift 调试符号保留在发布包之外，并从校验过的原始压缩包装配 Python，避免带入本地缓存路径。功能延续 0.2.9：修复 Codex 和 Claude Code 登录状态识别，并用颜色、图标和文字区分账号状态。浏览器增加两个网络检测网站入口，始终在共享 Chromium 内打开。Docker containerd/classic 兼容、环境检查、运行组件只读卷、源码保护和遥测默认保持不变。
+0.3.1 调整产品介绍和示例，并将 App 的命令标签、账号卡片和项目按钮改为 Claude Code 优先。Codex 继续可用，命令保持原样。运行组件、Docker containerd/classic 支持、源码保护和遥测默认均延续 0.3.0。
+
+**目前是测试版。** 项目最初用于个人使用，仍可能存在 bug 和兼容性问题。仓库公开 App、文档和配图，暂不公开应用自有源码。
 
 ![原生连接页面，明确标注为演示数据](assets/connection-zh.png)
 
-*截图来自原生应用，使用了标注为“演示数据”的示例内容。图中的 IP 和地区仅作说明，不是实际连接检测结果。*
+*截图来自原生应用，使用了标注为“演示数据”的示例内容。图中的 IP、地区和项目路径均为示例，不是用户数据或实际连接检测结果。*
 
 ## 能做什么
 
-- **持久化工作工具：** 完整安装包内包含 Codex、Claude Code 和 Chromium。节点订阅和工具账号由你提供。
+- **持久化工作工具：** 完整安装包内包含 Claude Code、Codex 和 Chromium。节点订阅和工具账号由你提供。
 - **固定联网路径：** 环境自行连接你选择的节点。节点不可用时，不会自动退回普通网络。
 - **连接由你确认：** 先查看实测出口 IP、估计地区和时区，再启用环境。检测到节点或出口变化后，需要重新检查并确认。
 - **操作真实项目文件：** 从 Mac 项目目录运行命令，即可将它共享给对应的 Linux 工作环境。多个项目可以同时使用。
@@ -40,7 +44,7 @@ f5e044116f9c26d7722a3270e1318b3304dbf46c3f22291c5e1b115698f69202
 
 需要一台运行 **macOS 14 或更新版本的 Apple Silicon Mac**、已启动的 **Docker Desktop**、足以容纳 Linux 环境的磁盘空间，以及支持的连接节点。当前使用 Docker Desktop 的 `desktop-linux` 环境；OrbStack、Colima 可以被识别，但暂不支持作为运行引擎。
 
-0.3.0 支持固定公网 IPv4 节点：**Trojan TCP/TLS、VMess AEAD TCP（可带 TLS）、VLESS TCP/TLS，以及无插件的 Shadowsocks AEAD/2022 TCP**。已有订阅链接、URI/Base64、Clash `proxies` 和 EWB 节点配置继续兼容。不支持的传输或选项会说明原因，不会暗中降级连接方式。
+0.3.1 支持固定公网 IPv4 节点：**Trojan TCP/TLS、VMess AEAD TCP（可带 TLS）、VLESS TCP/TLS，以及无插件的 Shadowsocks AEAD/2022 TCP**。已有订阅链接、URI/Base64、Clash `proxies` 和 EWB 节点配置继续兼容。不支持的传输或选项会说明原因，不会暗中降级连接方式。
 
 也可以直接粘贴或选择单个 Trojan 客户端 JSON，需包含 `type`、`host`、`port`、`password` 等字段。可选的 `data` 地址不会被访问或保存，`udp` 标志不会开启 UDP。其他协议的单对象客户端 JSON 暂不支持。
 
@@ -52,10 +56,10 @@ f5e044116f9c26d7722a3270e1318b3304dbf46c3f22291c5e1b115698f69202
 
 1. **安装应用。** 打开 DMG，将 Egress Workbench 拖到“应用程序”，启动 Docker Desktop，再打开 Egress Workbench。按 macOS 的正常流程批准打开预览版，不要全局关闭系统安全保护。
 2. **确认数据目录。** 可以保留默认位置，也可以选择外接硬盘上的专用文件夹。先确认位置，再导入环境。
-3. **导入安装包中的环境。** 应用会在本机校验并导入内置组件，不再分别下载 Codex、Claude Code 和 Chromium。等待完成；失败时会保留已有数据，可在同一目录重试。
+3. **导入安装包中的环境。** 应用会在本机校验并导入内置组件，不再分别下载 Claude Code、Codex 和 Chromium。等待完成；失败时会保留已有数据，可在同一目录重试。
 4. **导入并选择节点。** 粘贴订阅或节点链接，或选择配置文件，然后选中支持的节点并点击“检查”。检查节点会停止这套环境中正在运行的工作，应用会先请你确认。订阅只在本机解析。部分提供商使用证书兼容设置，可能需要确认信任该订阅；你无需手动提供证书文件或填写指纹。
 5. **核对出口。** 查看出口 IP、估计地区和时区，点击“核对并确认”。看到“已确认可用”后，再开始使用。
-6. **按需登录工具。** 打开“账号”，选择 Codex 或 Claude Code。终端会显示进度。请在**共享浏览器远程画面内的官方页面**完成授权，不要把授权链接复制到外层 Mac 浏览器地址栏。
+6. **按需登录工具。** 打开“账号”，选择 Claude Code 或 Codex。终端会显示进度。请在**共享浏览器远程画面内的官方页面**完成授权，不要把授权链接复制到外层 Mac 浏览器地址栏。
    可以先跳过账号步骤，稍后再登录。完成设置引导不代表账号已登录。
 7. **在终端打开项目。** 按“连接”页的示例运行。应用显示的命令会指向当前数据目录，避免电脑上已有另一套环境时误用旧命令。
 
@@ -89,16 +93,16 @@ f5e044116f9c26d7722a3270e1318b3304dbf46c3f22291c5e1b115698f69202
 cd /path/to/your-project
 
 # 打开交互界面
-ewb codex
 ewb claude
+ewb codex
 
 # 直接发送一个问题
-ewb codex exec "Summarize this project"
 ewb claude -p "Summarize this project"
+ewb codex exec "Summarize this project"
 
 # 继续已有会话
-ewb codex resume
 ewb claude --continue
+ewb codex resume
 
 # 进入当前项目的 Linux Shell
 ewb shell
@@ -114,15 +118,15 @@ ewb shell
 
 ### 更新已有环境
 
-**从 0.2.9 更新到 0.3.0：** 替换 App 即可。运行组件内容完全相同，本版本不需要迁移运行环境或重新登录；macOS 仍可能要求批准打开更新后的应用。
+**从 0.2.9 或 0.3.0 更新到 0.3.1：** 替换 App 即可。运行组件内容完全相同，本版本不需要迁移运行环境或重新登录；macOS 仍可能要求批准打开更新后的应用。
 
 替换 App 后，在“设置”查看运行组件状态，并使用提供的更新入口。0.2.7 → 0.2.9 已通过升级测试，原有授权、配置、项目登记、容器可写层和持久化卷保留，旧运行组件会备份。只替换 App 不会自动更新已安装的运行组件。已完成初始化的 0.2.6 保护版也保留备份升级路径。更新前请先结束活动会话。成功后环境保持停止，需要重新检查并确认连接。尚未初始化的旧目录会提示先完成连接设置；更旧或不兼容的目录会提示使用新专用目录，原数据保留。恢复未完成时，保持 Docker 运行并使用“继续恢复”。
 
 ### 账号登录
 
 ```sh
-ewb login                 # Codex
 ewb claude auth login     # Claude Code
+ewb login                 # Codex
 ```
 
 上述命令使用共享的内部浏览器。内部登录流程失败时会停止，不会回退到 Mac 浏览器打开账号页面。浏览器会保留 Cookie，但服务商可能让会话过期或要求重新验证身份。**账号状态未知不等于已经退出登录。** 普通重启环境不会主动清除授权。
@@ -187,7 +191,7 @@ ewb stop-all       # 停止这套环境，包括公共服务
 
 ## 许可证与适用范围
 
-许可方：MOYU。[PolyForm Noncommercial License 1.0.0](LICENSE) 适用于本仓库中 MOYU 的原创文档、配图和说明，以及 GitHub Releases 发布的 0.3.0 Release App，且以 MOYU 拥有相应权利的部分为限。0.3.0 Release App 按该许可证原文规定的非商业用途提供，并受其适用范围和通知要求约束。第三方组件仍适用其各自许可证。复制或再分发本许可证覆盖的材料时，请附带 LICENSE 原文或其官方 URL，以及 LICENSE 要求保留的通知。该许可证包含对慈善、教育、公共研究、公共安全或健康、环保和政府机构的许可范围。如果本摘要与 [LICENSE](LICENSE) 原文不一致，以 LICENSE 原文为准。
+许可方：MOYU。[PolyForm Noncommercial License 1.0.0](LICENSE) 适用于本仓库中 MOYU 的原创文档、配图和说明，以及 GitHub Releases 发布的 0.3.0 和 0.3.1 Release App，且以 MOYU 拥有相应权利的部分为限。0.3.0 和 0.3.1 Release App 按该许可证原文规定的非商业用途提供，并受其适用范围和通知要求约束。第三方组件仍适用其各自许可证。复制或再分发本许可证覆盖的材料时，请附带 LICENSE 原文或其官方 URL，以及 LICENSE 要求保留的通知。该许可证包含对慈善、教育、公共研究、公共安全或健康、环保和政府机构的许可范围。如果本摘要与 [LICENSE](LICENSE) 原文不一致，以 LICENSE 原文为准。
 
 PolyForm Noncommercial 是非商业许可，不是 OSI 认可的开源许可证，也不允许商业使用。当前仓库只公开文档、配图和 Release App，不包含 Egress Workbench 自有源代码；加入 LICENSE 不表示自有源码已经公开，也不构成对未公开源码的额外授权。第三方组件和服务继续适用各自的许可证、条款和政策。
 
