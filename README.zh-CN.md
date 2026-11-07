@@ -11,21 +11,21 @@ Egress Workbench 是面向 macOS 的**指纹运行环境**，为 Claude Code、C
 
 **配置一次，之后直接在终端工作。** 不同项目使用各自的工作目录，已支持的工具共用账号授权。
 
-> **0.3.1 发布版：** 此仓库提供公开说明和配图。Apple Silicon 安装包位于 [v0.3.1 Release](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.3.1)。当前为 ad-hoc 签名，尚未通过 Apple 公证。
+> **0.3.3 发布版：** 此仓库提供公开说明和配图。Apple Silicon 安装包位于 [v0.3.3 Release](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.3.3)。当前为 ad-hoc 签名，尚未通过 Apple 公证。
 
-## 0.3.1 发布版
+## 0.3.3 发布版
 
-[下载完整 DMG，约 1.149 GB](https://github.com/bbfp/egress-workbench-app/releases/download/v0.3.1/Egress-Workbench-0.3.1-arm64.dmg) · [SHA-256](https://github.com/bbfp/egress-workbench-app/releases/download/v0.3.1/Egress-Workbench-0.3.1-arm64.dmg.sha256) · [发布说明](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.3.1)
+[下载完整 DMG，约 1.149 GB](https://github.com/bbfp/egress-workbench-app/releases/download/v0.3.3/Egress-Workbench-0.3.3-arm64.dmg) · [SHA-256](https://github.com/bbfp/egress-workbench-app/releases/download/v0.3.3/Egress-Workbench-0.3.3-arm64.dmg.sha256) · [发布说明](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.3.3)
 
 本版本适用于 Apple Silicon、macOS 14 及以上，DMG 内含离线运行环境。SHA-256：
 
 ```text
-881d1f3b95ed4586f0bc24ad1994c05aaa3db103d230158fc86366b5eb4b62ac
+0e2efab0f7110aa71032c5b27e741b755da897328267ff57f3a19a91a6a9598d
 ```
 
 公开仓库只提供使用说明和截图，应用源码不在这里发布。
 
-0.3.1 调整产品介绍和示例，并将 App 的命令标签、账号卡片和项目按钮改为 Claude Code 优先。Codex 继续可用，命令保持原样。运行组件、Docker containerd/classic 支持、源码保护和遥测默认均延续 0.3.0。
+0.3.3 改善了设置步骤的自动前进、操作阶段和日志反馈、连接证据处理，以及浏览器首次启动反馈。已有账号、项目和浏览器数据会保留，源码保护和遥测默认保持不变。Claude Code 仍是主要入口，Codex 继续可用且命令保持原样。完整修复列表请查看发布说明。
 
 **目前是测试版。** 项目最初用于个人使用，仍可能存在 bug 和兼容性问题。仓库公开 App、文档和配图，暂不公开应用自有源码。
 
@@ -46,7 +46,7 @@ Egress Workbench 是面向 macOS 的**指纹运行环境**，为 Claude Code、C
 
 需要一台运行 **macOS 14 或更新版本的 Apple Silicon Mac**、已启动的 **Docker Desktop**、足以容纳 Linux 环境的磁盘空间，以及支持的连接节点。当前使用 Docker Desktop 的 `desktop-linux` 环境；OrbStack、Colima 可以被识别，但暂不支持作为运行引擎。
 
-0.3.1 支持固定公网 IPv4 节点：**Trojan TCP/TLS、VMess AEAD TCP（可带 TLS）、VLESS TCP/TLS，以及无插件的 Shadowsocks AEAD/2022 TCP**。已有订阅链接、URI/Base64、Clash `proxies` 和 EWB 节点配置继续兼容。不支持的传输或选项会说明原因，不会暗中降级连接方式。
+0.3.3 支持固定公网 IPv4 节点：**Trojan TCP/TLS、VMess AEAD TCP（可带 TLS）、VLESS TCP/TLS，以及无插件的 Shadowsocks AEAD/2022 TCP**。已有订阅链接、URI/Base64、Clash `proxies` 和 EWB 节点配置继续兼容。不支持的传输或选项会说明原因，不会暗中降级连接方式。
 
 也可以直接粘贴或选择单个 Trojan 客户端 JSON，需包含 `type`、`host`、`port`、`password` 等字段。可选的 `data` 地址不会被访问或保存，`udp` 标志不会开启 UDP。其他协议的单对象客户端 JSON 暂不支持。
 
@@ -120,7 +120,7 @@ ewb shell
 
 ### 更新已有环境
 
-**从 0.2.9 或 0.3.0 更新到 0.3.1：** 替换 App 即可。运行组件内容完全相同，本版本不需要迁移运行环境或重新登录；macOS 仍可能要求批准打开更新后的应用。
+**从 0.3.0–0.3.2 更新到 0.3.3：** 替换 App 即可。如果“设置”提供运行组件更新入口，请先完成更新，再检查并确认连接。已有数据仍保存在原数据目录中；macOS 仍可能要求批准打开更新后的应用。
 
 替换 App 后，在“设置”查看运行组件状态，并使用提供的更新入口。0.2.7 → 0.2.9 已通过升级测试，原有授权、配置、项目登记、容器可写层和持久化卷保留，旧运行组件会备份。只替换 App 不会自动更新已安装的运行组件。已完成初始化的 0.2.6 保护版也保留备份升级路径。更新前请先结束活动会话。成功后环境保持停止，需要重新检查并确认连接。尚未初始化的旧目录会提示先完成连接设置；更旧或不兼容的目录会提示使用新专用目录，原数据保留。恢复未完成时，保持 Docker 运行并使用“继续恢复”。
 
@@ -193,7 +193,7 @@ ewb stop-all       # 停止这套环境，包括公共服务
 
 ## 许可证与适用范围
 
-许可方：MOYU。[PolyForm Noncommercial License 1.0.0](LICENSE) 适用于本仓库中 MOYU 的原创文档、配图和说明，以及 GitHub Releases 发布的 0.3.0 和 0.3.1 Release App，且以 MOYU 拥有相应权利的部分为限。0.3.0 和 0.3.1 Release App 按该许可证原文规定的非商业用途提供，并受其适用范围和通知要求约束。第三方组件仍适用其各自许可证。复制或再分发本许可证覆盖的材料时，请附带 LICENSE 原文或其官方 URL，以及 LICENSE 要求保留的通知。该许可证包含对慈善、教育、公共研究、公共安全或健康、环保和政府机构的许可范围。如果本摘要与 [LICENSE](LICENSE) 原文不一致，以 LICENSE 原文为准。
+许可方：MOYU。[PolyForm Noncommercial License 1.0.0](LICENSE) 适用于本仓库中 MOYU 的原创文档、配图和说明，以及 GitHub Releases 发布的 0.3.0、0.3.1 和 0.3.3 Release App，且以 MOYU 拥有相应权利的部分为限。这些 Release App 按该许可证原文规定的非商业用途提供，并受其适用范围和通知要求约束。第三方组件仍适用其各自许可证。复制或再分发本许可证覆盖的材料时，请附带 LICENSE 原文或其官方 URL，以及 LICENSE 要求保留的通知。该许可证包含对慈善、教育、公共研究、公共安全或健康、环保和政府机构的许可范围。如果本摘要与 [LICENSE](LICENSE) 原文不一致，以 LICENSE 原文为准。
 
 PolyForm Noncommercial 是非商业许可，不是 OSI 认可的开源许可证，也不允许商业使用。当前仓库只公开文档、配图和 Release App，不包含 Egress Workbench 自有源代码；加入 LICENSE 不表示自有源码已经公开，也不构成对未公开源码的额外授权。第三方组件和服务继续适用各自的许可证、条款和政策。
 
