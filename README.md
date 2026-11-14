@@ -11,21 +11,21 @@ The current implementation checks the exit IP and estimated region, applies the 
 
 **Set up once, then work from Terminal.** Different projects have separate workspace directories; the supported tools share their account authorization.
 
-> **0.3.3 release:** this repository contains the public documentation and screenshots. Download the Apple Silicon DMG from the [v0.3.3 release](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.3.3). The app is ad-hoc signed and has not been Apple-notarized.
+> **0.5.1 test release:** this repository contains the public documentation and screenshots. Download the Apple Silicon DMG from the [v0.5.1 release](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.5.1). The app is ad-hoc signed and has not been Apple-notarized.
 
-## 0.3.3 release
+## 0.5.1 test release
 
-[Download the full DMG, about 1.149 GB](https://github.com/bbfp/egress-workbench-app/releases/download/v0.3.3/Egress-Workbench-0.3.3-arm64.dmg) · [SHA-256](https://github.com/bbfp/egress-workbench-app/releases/download/v0.3.3/Egress-Workbench-0.3.3-arm64.dmg.sha256) · [Release notes](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.3.3)
+[Download the full DMG, about 1.195 GB](https://github.com/bbfp/egress-workbench-app/releases/download/v0.5.1/Egress-Workbench-0.5.1-arm64.dmg) · [SHA-256](https://github.com/bbfp/egress-workbench-app/releases/download/v0.5.1/Egress-Workbench-0.5.1-arm64.dmg.sha256) · [Release notes](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.5.1)
 
-This release targets Apple Silicon Macs running macOS 14 or later. The DMG contains the offline environment and has this SHA-256 digest:
+This release targets Apple Silicon Macs running macOS 14 or later. The DMG contains the offline environment. Its exact size is **1,194,646,479 bytes** (about 1.195 GB / 1.113 GiB), with this SHA-256 digest:
 
 ```text
-0e2efab0f7110aa71032c5b27e741b755da897328267ff57f3a19a91a6a9598d
+7385cf4c7b77fecc96bd29d8c0371c2fb6faa074618fd81d8fbaf1ecd7bf5857
 ```
 
 The public repository contains guides and screenshots. The application source is not published here.
 
-0.3.3 improves setup-step transitions, visible operation feedback, connection-evidence handling and first browser startup feedback. It keeps existing account, project and browser data, and retains the source-protection and telemetry defaults. Claude Code remains the primary command entry while Codex stays available with the same commands. See the release notes for the complete list of fixes.
+0.5.1 adds SOCKS5-over-TLS and layered connection feedback, and includes the validated VLESS Reality / XTLS-Vision, Hysteria2, TUIC and HTTPS CONNECT combinations. Failed exit checks no longer appear as requests for confirmation; uncertain causes are stated explicitly. Existing protocols, security boundaries, user data, compiled source protection and telemetry defaults are retained. See the supported combinations below.
 
 **This is a test release.** It began as a tool for personal use; bugs and compatibility gaps may remain. The repository publishes the App, documentation and screenshots, without the application's own source code.
 
@@ -46,7 +46,26 @@ The public repository contains guides and screenshots. The application source is
 
 You need an **Apple Silicon Mac with macOS 14 or later**, a running **Docker Desktop** installation, enough storage for the included Linux environment, and a supported connection node. The app uses Docker Desktop's `desktop-linux` environment. OrbStack and Colima are detected but are not supported as runtime engines.
 
-Version 0.3.3 supports fixed public IPv4 nodes: **Trojan TCP/TLS, VMess AEAD TCP with optional TLS, VLESS TCP/TLS, and Shadowsocks AEAD/2022 TCP without plugins**. Existing subscription URLs, URI/Base64 lists, Clash `proxies`, and EWB profiles remain compatible. Unsupported transports and options are reported with a reason; the app does not silently convert them to a weaker connection mode.
+Version 0.5.1 supports the following combinations with fixed public IPv4 node endpoints. “Supported” means the format can be imported and the gateway implements it; each node still needs a successful connection check and explicit exit approval.
+
+| Node type | Supported combinations |
+|---|---|
+| VLESS Reality | TCP, with or without XTLS-Vision (`xtls-rprx-vision`) |
+| VLESS TLS | TCP/TLS with optional Vision; WebSocket/TLS, gRPC/TLS and HTTPUpgrade/TLS |
+| Hysteria2 / Hy2 | QUIC; CA verification, leaf-certificate pin, or both; optional Salamander |
+| TUIC | QUIC/H3 with strict CA/name validation |
+| Trojan | TCP/TLS |
+| VMess | AEAD, `alterId=0`, TCP with optional TLS |
+| Shadowsocks | Supported AEAD/2022 ciphers, TCP without plugins |
+| HTTPS CONNECT | Username/password proxy with strict CA/name validation |
+| SOCKS5 | Username/password proxy; plaintext requires explicit risk confirmation |
+| SOCKS5-over-TLS | Username/password proxy, strict CA/name validation, ALPN `http/1.1` |
+
+**Import formats:** subscription URLs, individual or multiline node URIs, Base64 URI lists, Clash/Mihomo-compatible `proxies` documents (YAML/JSON), and validated EWB node JSON. URI schemes include `vless://`, `hysteria2://` / `hy2://`, `tuic://`, `trojan://`, `vmess://`, `ss://`, `https://` and `socks5://`. This is not support for every option in arbitrary client configuration files. Unsupported entries retain an explanation without discarding the rest of a mixed subscription.
+
+For a SOCKS5 link without a TLS declaration, choose **TLS encrypted** or **Plaintext** before checking. Explicit `tls=true` / `tls=false`, supported SNI and `alpn=http%2F1.1` options, and corresponding Mihomo SOCKS5 TLS fields are accepted. A failed TLS handshake never falls back to plaintext or direct access. Plaintext SOCKS5 does not encrypt proxy credentials; website HTTPS still provides its own encryption.
+
+**Not supported:** VLESS XHTTP, Hysteria2 port hopping, Shadowsocks plugins, WebSocket early data, gRPC multi mode, arbitrary WebSocket headers, and unrestricted UDP from workspace applications. Hy2/TUIC use UDP only for the trusted gateway-to-node transport. Trojan/VMess WebSocket or gRPC combinations are not included. Certificate verification is not silently disabled; Hy2 leaf-pin modes have their own explicit trust semantics.
 
 A single-object Trojan client JSON can also be pasted or imported when it contains fields such as `type`, `host`, `port` and `password`. The optional `data` URL is not fetched or retained, and an `udp` flag does not enable UDP. Other raw client JSON exports are not supported yet.
 
@@ -120,9 +139,9 @@ Save your work before checking a node: the check stops this environment's worklo
 
 ### Update an existing environment
 
-**From 0.3.0–0.3.2 to 0.3.3:** replace the app. If Settings offers a runtime-component update, run it before checking and confirming the connection. Existing data remains in its data folder; macOS may ask you to approve opening the updated app.
+**Updating to 0.5.1:** replace the App, then use **Settings → Update runtime components** for an eligible installed environment before checking and confirming the connection. Replacing the App alone does not add new protocols to an old gateway. The update stops the environment, backs up runtime components, and preserves accounts, projects, browser data, volumes and writable layers. It leaves the environment stopped until you confirm the exit again.
 
-After replacing the app, check the runtime component status in Settings and use the offered update entry. The 0.2.7 → 0.2.9 update was tested with existing authorization, configuration, project records, writable container data and persistent volumes preserved, and the previous runtime backed up. Replacing the app alone does not update installed runtime components. Initialized 0.2.6 protected environments also retain the backup-and-upgrade path. End active sessions before updating. A successful update leaves the environment stopped until you check and confirm the connection again. An old directory that has not been initialized directs you to finish connection setup. Older or incompatible layouts require a new dedicated directory and retain the original data. If recovery is pending, keep Docker running and choose Continue recovery.
+This release was tested with protected **0.3.3 → 0.5.1** and **0.5.0 → 0.5.1** upgrades; the latter covers forced termination and recovery at five durable stages. Other old versions remain subject to compatibility preflight and are not all validated. End active sessions before updating. If recovery is pending, keep Docker running and choose Continue recovery. Incompatible layouts receive an explanation and retain their original data.
 
 ### Accounts
 
@@ -193,7 +212,7 @@ Created by [MOYU](https://github.com/bbfp).
 
 ## License and scope
 
-Licensor: MOYU. The [PolyForm Noncommercial License 1.0.0](LICENSE) covers MOYU's original documentation, images and descriptions in this repository, and the 0.3.0, 0.3.1 and 0.3.3 Release Apps published on GitHub Releases, to the extent MOYU holds the relevant rights. Those Release Apps are offered for the noncommercial purposes stated in the license, subject to its scope and notices. Third-party components remain under their own licenses. If you copy or redistribute material covered by this license, include the LICENSE text or its official URL and any notices that LICENSE requires. The license includes its stated permissions for charitable, educational, public research, public safety or health, environmental protection and government institutions. If this summary conflicts with the [LICENSE](LICENSE) text, the LICENSE text controls.
+Licensor: MOYU. The [PolyForm Noncommercial License 1.0.0](LICENSE) covers MOYU's original documentation, images and descriptions in this repository, and the 0.3.0, 0.3.1, 0.3.3 and 0.5.1 Release Apps published on GitHub Releases, to the extent MOYU holds the relevant rights. Those Release Apps are offered for the noncommercial purposes stated in the license, subject to its scope and notices. Third-party components remain under their own licenses. If you copy or redistribute material covered by this license, include the LICENSE text or its official URL and any notices that LICENSE requires. The license includes its stated permissions for charitable, educational, public research, public safety or health, environmental protection and government institutions. If this summary conflicts with the [LICENSE](LICENSE) text, the LICENSE text controls.
 
 PolyForm Noncommercial is a noncommercial license. It is not an OSI-approved open-source license, and it does not permit commercial use. This repository only publishes documentation, images and the Release App; it does not publish Egress Workbench's own source code. Adding LICENSE does not mean that the source code has been published or grant additional rights to unpublished source. Third-party components and services remain subject to their own licenses, terms and policies.
 
