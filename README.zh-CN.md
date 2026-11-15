@@ -11,19 +11,21 @@ Egress Workbench 是面向 macOS 的**指纹运行环境**，为 Claude Code、C
 
 **配置一次，之后直接在终端工作。** 不同项目使用各自的工作目录，已支持的工具共用账号授权。
 
-> **0.5.1 内测版：** 此仓库提供公开说明和配图。Apple Silicon 安装包位于 [v0.5.1 Release](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.5.1)。当前为 ad-hoc 签名，尚未通过 Apple 公证。
+> **0.5.2 内测版：** 此仓库提供公开说明和配图。Apple Silicon 安装包位于 [v0.5.2 Release](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.5.2)。当前为 ad-hoc 签名，尚未通过 Apple 公证。
 
-## 0.5.1 内测版
+## 0.5.2 内测版
 
-[下载完整 DMG，约 1.195 GB](https://github.com/bbfp/egress-workbench-app/releases/download/v0.5.1/Egress-Workbench-0.5.1-arm64.dmg) · [SHA-256](https://github.com/bbfp/egress-workbench-app/releases/download/v0.5.1/Egress-Workbench-0.5.1-arm64.dmg.sha256) · [发布说明](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.5.1)
+[下载完整 DMG，约 1.194 GB](https://github.com/bbfp/egress-workbench-app/releases/download/v0.5.2/Egress-Workbench-0.5.2-arm64.dmg) · [SHA-256](https://github.com/bbfp/egress-workbench-app/releases/download/v0.5.2/Egress-Workbench-0.5.2-arm64.dmg.sha256) · [发布说明](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.5.2)
 
-本版本适用于 Apple Silicon、macOS 14 及以上，DMG 内含离线运行环境，准确大小为 **1,194,646,479 字节**（约 1.195 GB / 1.113 GiB）。SHA-256：
+本版本适用于 Apple Silicon、macOS 14 及以上，DMG 内含离线运行环境，准确大小为 **1,193,630,603 字节**（约 1.194 GB / 1.112 GiB）。SHA-256：
 
 ```text
-7385cf4c7b77fecc96bd29d8c0371c2fb6faa074618fd81d8fbaf1ecd7bf5857
+489df210b5924dc86c803a9bc089bdf440927c17666fc7cf28b15d5ace3df1d3
 ```
 
 公开仓库只提供使用说明和截图，应用源码不在这里发布。
+
+0.5.2 修复私人源码构建清单中遗漏的网关文件。其 267 个受保护载荷文件和 0.1.15 离线环境与 0.5.1 逐字节一致；记录完整、运行组件未损坏的 0.5.1 安装无需为此补丁更新运行组件。
 
 0.5.1 补齐 SOCKS5-over-TLS 和分层连接提示，并包含 VLESS Reality / XTLS-Vision、Hysteria2、TUIC、HTTPS CONNECT 等已验证组合。出口检查失败不会再误提示为等待确认；无法确定的原因会明确说明。保留原有协议、安全边界、用户数据、源码编译保护和遥测默认。具体支持范围见下表。
 
@@ -46,7 +48,7 @@ Egress Workbench 是面向 macOS 的**指纹运行环境**，为 Claude Code、C
 
 需要一台运行 **macOS 14 或更新版本的 Apple Silicon Mac**、已启动的 **Docker Desktop**、足以容纳 Linux 环境的磁盘空间，以及支持的连接节点。当前使用 Docker Desktop 的 `desktop-linux` 环境；OrbStack、Colima 可以被识别，但暂不支持作为运行引擎。
 
-0.5.1 支持以下固定公网 IPv4 节点组合。“支持”表示能导入对应格式并由网关建立连接；具体节点仍需通过检查，并由你确认出口后才能使用。
+0.5.2 支持以下固定公网 IPv4 节点组合。“支持”表示能导入对应格式并由网关建立连接；具体节点仍需通过检查，并由你确认出口后才能使用。
 
 | 节点类型 | 支持的组合 |
 |---|---|
@@ -139,9 +141,11 @@ ewb shell
 
 ### 更新已有环境
 
-**更新到 0.5.1：** 替换 App 后，进入 **设置 → 更新运行组件**，先更新兼容的已安装环境，再检查并确认连接。只替换 App 不会让旧网关获得新协议能力。更新会停止环境并备份运行组件，保留已有账号、项目、浏览器数据、卷和可写层；完成后环境保持停止，需重新确认出口。
+**从 0.5.1 更新到 0.5.2：** 安装记录完整、运行组件正常时，替换 App 即可，运行环境不变。
 
-本版实际验证了受保护的 **0.3.3 → 0.5.1** 和 **0.5.0 → 0.5.1** 升级，后者覆盖五个持久阶段的强制终止与恢复。其他旧版本由兼容性预检决定，不能视为全部已验证。更新前请先结束活动会话；恢复未完成时，保持 Docker 运行并使用“继续恢复”。不兼容的目录会说明原因并保留原数据。
+**从更早版本更新：** 替换 App 后，进入 **设置 → 更新运行组件**，先更新兼容的已安装环境，再检查并确认连接。只替换 App 不会让旧网关获得新协议能力。更新会停止环境并备份运行组件，保留已有账号、项目、浏览器数据、卷和可写层；完成后环境保持停止，需重新确认出口。
+
+0.5.1 发布时实际验证了受保护的 **0.3.3 → 0.5.1** 和 **0.5.0 → 0.5.1** 升级，后者覆盖五个持久阶段的强制终止与恢复。其他旧版本由兼容性预检决定，不能视为全部已验证。更新前请先结束活动会话；恢复未完成时，保持 Docker 运行并使用“继续恢复”。不兼容的目录会说明原因并保留原数据。
 
 ### 账号登录
 
@@ -212,7 +216,7 @@ ewb stop-all       # 停止这套环境，包括公共服务
 
 ## 许可证与适用范围
 
-许可方：MOYU。[PolyForm Noncommercial License 1.0.0](LICENSE) 适用于本仓库中 MOYU 的原创文档、配图和说明，以及 GitHub Releases 发布的 0.3.0、0.3.1、0.3.3 和 0.5.1 Release App，且以 MOYU 拥有相应权利的部分为限。这些 Release App 按该许可证原文规定的非商业用途提供，并受其适用范围和通知要求约束。第三方组件仍适用其各自许可证。复制或再分发本许可证覆盖的材料时，请附带 LICENSE 原文或其官方 URL，以及 LICENSE 要求保留的通知。该许可证包含对慈善、教育、公共研究、公共安全或健康、环保和政府机构的许可范围。如果本摘要与 [LICENSE](LICENSE) 原文不一致，以 LICENSE 原文为准。
+许可方：MOYU。[PolyForm Noncommercial License 1.0.0](LICENSE) 适用于本仓库中 MOYU 的原创文档、配图和说明，以及 GitHub Releases 发布的 0.3.0、0.3.1、0.3.3、0.5.1 和 0.5.2 Release App，且以 MOYU 拥有相应权利的部分为限。这些 Release App 按该许可证原文规定的非商业用途提供，并受其适用范围和通知要求约束。第三方组件仍适用其各自许可证。复制或再分发本许可证覆盖的材料时，请附带 LICENSE 原文或其官方 URL，以及 LICENSE 要求保留的通知。该许可证包含对慈善、教育、公共研究、公共安全或健康、环保和政府机构的许可范围。如果本摘要与 [LICENSE](LICENSE) 原文不一致，以 LICENSE 原文为准。
 
 PolyForm Noncommercial 是非商业许可，不是 OSI 认可的开源许可证，也不允许商业使用。当前仓库只公开文档、配图和 Release App，不包含 Egress Workbench 自有源代码；加入 LICENSE 不表示自有源码已经公开，也不构成对未公开源码的额外授权。第三方组件和服务继续适用各自的许可证、条款和政策。
 

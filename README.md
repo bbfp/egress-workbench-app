@@ -11,19 +11,21 @@ The current implementation checks the exit IP and estimated region, applies the 
 
 **Set up once, then work from Terminal.** Different projects have separate workspace directories; the supported tools share their account authorization.
 
-> **0.5.1 test release:** this repository contains the public documentation and screenshots. Download the Apple Silicon DMG from the [v0.5.1 release](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.5.1). The app is ad-hoc signed and has not been Apple-notarized.
+> **0.5.2 test release:** this repository contains the public documentation and screenshots. Download the Apple Silicon DMG from the [v0.5.2 release](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.5.2). The app is ad-hoc signed and has not been Apple-notarized.
 
-## 0.5.1 test release
+## 0.5.2 test release
 
-[Download the full DMG, about 1.195 GB](https://github.com/bbfp/egress-workbench-app/releases/download/v0.5.1/Egress-Workbench-0.5.1-arm64.dmg) · [SHA-256](https://github.com/bbfp/egress-workbench-app/releases/download/v0.5.1/Egress-Workbench-0.5.1-arm64.dmg.sha256) · [Release notes](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.5.1)
+[Download the full DMG, about 1.194 GB](https://github.com/bbfp/egress-workbench-app/releases/download/v0.5.2/Egress-Workbench-0.5.2-arm64.dmg) · [SHA-256](https://github.com/bbfp/egress-workbench-app/releases/download/v0.5.2/Egress-Workbench-0.5.2-arm64.dmg.sha256) · [Release notes](https://github.com/bbfp/egress-workbench-app/releases/tag/v0.5.2)
 
-This release targets Apple Silicon Macs running macOS 14 or later. The DMG contains the offline environment. Its exact size is **1,194,646,479 bytes** (about 1.195 GB / 1.113 GiB), with this SHA-256 digest:
+This release targets Apple Silicon Macs running macOS 14 or later. The DMG contains the offline environment. Its exact size is **1,193,630,603 bytes** (about 1.194 GB / 1.112 GiB), with this SHA-256 digest:
 
 ```text
-7385cf4c7b77fecc96bd29d8c0371c2fb6faa074618fd81d8fbaf1ecd7bf5857
+489df210b5924dc86c803a9bc089bdf440927c17666fc7cf28b15d5ace3df1d3
 ```
 
 The public repository contains guides and screenshots. The application source is not published here.
+
+0.5.2 fixes a missing gateway file in the private source-build context. Its 267 protected payload files and offline environment 0.1.15 are byte-for-byte identical to 0.5.1. Complete, intact 0.5.1 installations do not need a runtime update for this patch.
 
 0.5.1 adds SOCKS5-over-TLS and layered connection feedback, and includes the validated VLESS Reality / XTLS-Vision, Hysteria2, TUIC and HTTPS CONNECT combinations. Failed exit checks no longer appear as requests for confirmation; uncertain causes are stated explicitly. Existing protocols, security boundaries, user data, compiled source protection and telemetry defaults are retained. See the supported combinations below.
 
@@ -46,7 +48,7 @@ The public repository contains guides and screenshots. The application source is
 
 You need an **Apple Silicon Mac with macOS 14 or later**, a running **Docker Desktop** installation, enough storage for the included Linux environment, and a supported connection node. The app uses Docker Desktop's `desktop-linux` environment. OrbStack and Colima are detected but are not supported as runtime engines.
 
-Version 0.5.1 supports the following combinations with fixed public IPv4 node endpoints. “Supported” means the format can be imported and the gateway implements it; each node still needs a successful connection check and explicit exit approval.
+Version 0.5.2 supports the following combinations with fixed public IPv4 node endpoints. “Supported” means the format can be imported and the gateway implements it; each node still needs a successful connection check and explicit exit approval.
 
 | Node type | Supported combinations |
 |---|---|
@@ -139,9 +141,11 @@ Save your work before checking a node: the check stops this environment's worklo
 
 ### Update an existing environment
 
-**Updating to 0.5.1:** replace the App, then use **Settings → Update runtime components** for an eligible installed environment before checking and confirming the connection. Replacing the App alone does not add new protocols to an old gateway. The update stops the environment, backs up runtime components, and preserves accounts, projects, browser data, volumes and writable layers. It leaves the environment stopped until you confirm the exit again.
+**Updating from 0.5.1 to 0.5.2:** for a complete, intact installation, replace the App; the runtime environment is unchanged.
 
-This release was tested with protected **0.3.3 → 0.5.1** and **0.5.0 → 0.5.1** upgrades; the latter covers forced termination and recovery at five durable stages. Other old versions remain subject to compatibility preflight and are not all validated. End active sessions before updating. If recovery is pending, keep Docker running and choose Continue recovery. Incompatible layouts receive an explanation and retain their original data.
+**Updating from an earlier version:** replace the App, then use **Settings → Update runtime components** for an eligible installed environment before checking and confirming the connection. Replacing the App alone does not add new protocols to an old gateway. The update stops the environment, backs up runtime components, and preserves accounts, projects, browser data, volumes and writable layers. It leaves the environment stopped until you confirm the exit again.
+
+The 0.5.1 release was tested with protected **0.3.3 → 0.5.1** and **0.5.0 → 0.5.1** upgrades; the latter covers forced termination and recovery at five durable stages. Other old versions remain subject to compatibility preflight and are not all validated. End active sessions before updating. If recovery is pending, keep Docker running and choose Continue recovery. Incompatible layouts receive an explanation and retain their original data.
 
 ### Accounts
 
@@ -212,7 +216,7 @@ Created by [MOYU](https://github.com/bbfp).
 
 ## License and scope
 
-Licensor: MOYU. The [PolyForm Noncommercial License 1.0.0](LICENSE) covers MOYU's original documentation, images and descriptions in this repository, and the 0.3.0, 0.3.1, 0.3.3 and 0.5.1 Release Apps published on GitHub Releases, to the extent MOYU holds the relevant rights. Those Release Apps are offered for the noncommercial purposes stated in the license, subject to its scope and notices. Third-party components remain under their own licenses. If you copy or redistribute material covered by this license, include the LICENSE text or its official URL and any notices that LICENSE requires. The license includes its stated permissions for charitable, educational, public research, public safety or health, environmental protection and government institutions. If this summary conflicts with the [LICENSE](LICENSE) text, the LICENSE text controls.
+Licensor: MOYU. The [PolyForm Noncommercial License 1.0.0](LICENSE) covers MOYU's original documentation, images and descriptions in this repository, and the 0.3.0, 0.3.1, 0.3.3, 0.5.1 and 0.5.2 Release Apps published on GitHub Releases, to the extent MOYU holds the relevant rights. Those Release Apps are offered for the noncommercial purposes stated in the license, subject to its scope and notices. Third-party components remain under their own licenses. If you copy or redistribute material covered by this license, include the LICENSE text or its official URL and any notices that LICENSE requires. The license includes its stated permissions for charitable, educational, public research, public safety or health, environmental protection and government institutions. If this summary conflicts with the [LICENSE](LICENSE) text, the LICENSE text controls.
 
 PolyForm Noncommercial is a noncommercial license. It is not an OSI-approved open-source license, and it does not permit commercial use. This repository only publishes documentation, images and the Release App; it does not publish Egress Workbench's own source code. Adding LICENSE does not mean that the source code has been published or grant additional rights to unpublished source. Third-party components and services remain subject to their own licenses, terms and policies.
 
